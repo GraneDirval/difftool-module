@@ -11,6 +11,7 @@ services:
       - '@demo_data.entity_serializer'
       - '@demo_data.data_comparator'
       - '@demo_data.entity_serialization_data_provider'
+      - '@demo_data.fixture_data_locator'
 
 
   development.create_data_diff:
