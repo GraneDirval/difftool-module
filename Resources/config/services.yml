@@ -1,7 +1,7 @@
 services:
   demo_data.data_comparator:
     class: Playwing\DiffToolBundle\DiffTool\DataComparator
-    arguments: ['@doctrine.orm.entity_manager', '@demo_data.entity_data_provider', '@demo_data.entity_serializer']
+    arguments: ['@doctrine.orm.entity_manager', '@demo_data.entity_data_provider', '@demo_data.entity_serializer', '@demo_data.fixture_data_locator']
 
   demo_data.changeset_mapper:
     class: Playwing\DiffToolBundle\DiffTool\ChangesetMapper
@@ -21,3 +21,7 @@ services:
 
   demo_data.entity_serialization_data_provider:
       class: Playwing\DiffToolBundle\DiffTool\EntitySerializationDataProvider
+
+  demo_data.fixture_data_locator:
+      class: Playwing\DiffToolBundle\DiffTool\FixtureDataLocator
+      arguments: ['@filesystem']

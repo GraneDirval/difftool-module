@@ -30,27 +30,29 @@ class DataComparator
     private $entitySerializer;
 
     private $paths = [];
+    /**
+     * @var FixtureDataLocator
+     */
+    private $locator;
 
     /**
      * DataComparator constructor.
      * @param EntityManager      $entityManager
      * @param EntityDataProvider $entityDataProvider
      * @param EntitySerializer   $entitySerializer
+     * @param FixtureDataLocator $locator
      */
-    public function __construct(EntityManager $entityManager, EntityDataProvider $entityDataProvider, EntitySerializer $entitySerializer)
+    public function __construct(
+        EntityManager $entityManager,
+        EntityDataProvider $entityDataProvider,
+        EntitySerializer $entitySerializer,
+        FixtureDataLocator $locator
+    )
     {
         $this->entityManager      = $entityManager;
         $this->entityDataProvider = $entityDataProvider;
         $this->entitySerializer   = $entitySerializer;
-    }
-
-    public function setPaths($paths)
-    {
-        if (!is_array($paths)) {
-            $paths = [$paths];
-        }
-
-        $this->paths = $paths;
+        $this->locator            = $locator;
     }
 
     public function compareDiffBetweenTwoFixtures(array $newFixture, array $oldFixture)
@@ -167,21 +169,8 @@ class DataComparator
     {
         /** @var HasUuid[] $actualData */
         $actualData = $this->entityDataProvider->getEntityData($entity, $ignoredFields);
-
-        $fixtureData = null;
-        foreach ($this->paths as $path) {
-
-            try {
-                $fixtureData = FixtureDataLoader::loadDataFromJSONFile($path, $fileName);
-                break;
-            } catch (\Throwable $exception) {
-
-            }
-        }
-
-        if (!$fixtureData) {
-            throw new \Exception(sprintf('File `%s` is not found. Scanned paths: %s', $fileName, json_encode($this->paths)));
-        }
+        $path        = $this->locator->locateFile($fileName);
+        $fixtureData = json_decode(file_get_contents($path), true);
 
         $classMetadataFactory = $this->entityManager->getMetadataFactory();
         /** @var ClassMetadata $metadata */

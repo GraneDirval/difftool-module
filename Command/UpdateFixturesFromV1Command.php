@@ -8,6 +8,7 @@ use Playwing\DiffToolBundle\DiffTool\DataComparator;
 use Playwing\DiffToolBundle\DiffTool\EntityDataProvider;
 use Playwing\DiffToolBundle\DiffTool\EntitySerializationDataProvider;
 use Playwing\DiffToolBundle\DiffTool\EntitySerializer;
+use Playwing\DiffToolBundle\DiffTool\FixtureDataLocator;
 use Playwing\DiffToolBundle\Entity\Interfaces\HasUuid;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -42,6 +43,10 @@ class UpdateFixturesFromV1Command extends ContainerAwareCommand
      * @var EntitySerializationDataProvider
      */
     private $serializationDataProvider;
+    /**
+     * @var FixtureDataLocator
+     */
+    private $locator;
 
     /**
      * UpdateFixturesFromV1Command constructor.
@@ -52,6 +57,7 @@ class UpdateFixturesFromV1Command extends ContainerAwareCommand
      * @param EntitySerializer                $entitySerializer
      * @param DataComparator                  $dataComparator
      * @param EntitySerializationDataProvider $serializationDataProvider
+     * @param FixtureDataLocator              $locator
      */
     public function __construct(
         EntityDataProvider $dataProvider,
@@ -60,7 +66,8 @@ class UpdateFixturesFromV1Command extends ContainerAwareCommand
         EntityManagerInterface $manager,
         EntitySerializer $entitySerializer,
         DataComparator $dataComparator,
-        EntitySerializationDataProvider $serializationDataProvider
+        EntitySerializationDataProvider $serializationDataProvider,
+        FixtureDataLocator $locator
     )
     {
         parent::__construct();
@@ -72,6 +79,7 @@ class UpdateFixturesFromV1Command extends ContainerAwareCommand
         $this->entitySerializer          = $entitySerializer;
         $this->dataComparator            = $dataComparator;
         $this->serializationDataProvider = $serializationDataProvider;
+        $this->locator                   = $locator;
     }
 
     /**
@@ -90,6 +98,7 @@ class UpdateFixturesFromV1Command extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $mappings = $this->serializationDataProvider->getEntityMappings($input->getOption('entity'));
+
 
         $filters = $this->entityManager->getFilters();
         if ($filters->has('softdeleteable')) {
@@ -125,7 +134,7 @@ class UpdateFixturesFromV1Command extends ContainerAwareCommand
             }
 
 
-            $destination = $this->rootDir . '/../src/' . sprintf('Playwing\DiffToolBundle/DataFixtures/ORM/Data/%s', $fileName);
+            $destination = $this->locator->getDefaultPathToWrite().$fileName;
             $output->writeln(sprintf('Creating %s', $fileName));
 
             if (!$this->filesystem->exists($destination)) {

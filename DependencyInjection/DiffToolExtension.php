@@ -23,8 +23,8 @@ class DiffToolExtension extends Extension
         $configuration = new Configuration();
         $config     = $this->processConfiguration($configuration, $configs);
 
-        $comparatorDefinition = $container->getDefinition('demo_data.data_comparator');
-        $comparatorDefinition->addMethodCall('setPaths', $config['paths'] ?? []);
+        $comparatorDefinition = $container->getDefinition('demo_data.fixture_data_locator');
+        $comparatorDefinition->replaceArgument(1, $config['paths'] ?? []);
 
         $dataProviderDefinition = $container->getDefinition('demo_data.entity_serialization_data_provider');
         $entityData = [];
