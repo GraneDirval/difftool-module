@@ -89,7 +89,7 @@ class UpdateFixturesFromV1Command extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $mappings = $this->entitySerializer->serializeEntity($input->getOption('entity'));
+        $mappings = $this->serializationDataProvider->getEntityMappings($input->getOption('entity'));
 
         $filters = $this->entityManager->getFilters();
         if ($filters->has('softdeleteable')) {
