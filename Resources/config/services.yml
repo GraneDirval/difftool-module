@@ -1,0 +1,23 @@
+services:
+  demo_data.data_comparator:
+    class: Playwing\DiffToolBundle\DiffTool\DataComparator
+    arguments: ['@doctrine.orm.entity_manager', '@demo_data.entity_data_provider', '@demo_data.entity_serializer']
+
+  demo_data.changeset_mapper:
+    class: Playwing\DiffToolBundle\DiffTool\ChangesetMapper
+    arguments: ['@doctrine.orm.entity_manager']
+
+  demo_data.insert_sqlgenerator:
+    class: Playwing\DiffToolBundle\DiffTool\SQLGenerator
+    arguments:
+      - "@doctrine.orm.entity_manager"
+
+  demo_data.entity_data_provider:
+     class: Playwing\DiffToolBundle\DiffTool\EntityDataProvider
+     arguments: ['@doctrine.orm.entity_manager']
+
+  demo_data.entity_serializer:
+     class: Playwing\DiffToolBundle\DiffTool\EntitySerializer
+
+  demo_data.entity_serialization_data_provider:
+      class: Playwing\DiffToolBundle\DiffTool\EntitySerializationDataProvider

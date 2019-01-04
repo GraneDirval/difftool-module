@@ -1,0 +1,26 @@
+services:
+  development.update_fixtures_from_v1:
+    class: Playwing\DiffToolBundle\Command\UpdateFixturesFromV1Command
+    tags:
+      - { name: console.command }
+    arguments:
+      - "@demo_data.entity_data_provider"
+      - '@filesystem'
+      - '%kernel.root_dir%'
+      - '@doctrine.orm.entity_manager'
+      - '@demo_data.entity_serializer'
+      - '@demo_data.data_comparator'
+      - '@demo_data.entity_serialization_data_provider'
+
+
+  development.create_data_diff:
+    class: Playwing\DiffToolBundle\Command\CreateDataDiffCommand
+    tags:
+      - { name: console.command }
+    arguments:
+      - "@doctrine.orm.entity_manager"
+      - '@demo_data.changeset_mapper'
+      - '@demo_data.data_comparator'
+      - '@demo_data.insert_sqlgenerator'
+      - '%kernel.cache_dir%'
+      - '@demo_data.entity_serialization_data_provider'

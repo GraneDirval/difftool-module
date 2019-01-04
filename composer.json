@@ -1,0 +1,16 @@
+{
+    "name": "playwing/difftool",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Dmitriy Bichenko",
+            "email": "dmitriy.bichenko@playwing.net"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Playwing\\DiffToolBundle\\": ""
+        }
+    }
+}
