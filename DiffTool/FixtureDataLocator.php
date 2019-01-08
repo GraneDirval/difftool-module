@@ -40,14 +40,16 @@ class FixtureDataLocator
 
     public function locateFile(string $fileName): string
     {
+        $scannedPaths = [];
         foreach ($this->paths as $path) {
-            $path = $path . $fileName;
+            $path           = $path . $fileName;
+            $scannedPaths[] = $path;
             if ($this->filesystem->exists($path)) {
                 return $path;
             };
         }
 
-        throw new \Exception(sprintf('File `%s` is not found. Scanned paths: %s', $fileName, json_encode($this->paths)));
+        throw new \Exception(sprintf('File `%s` is not found. Scanned paths: %s', $fileName, json_encode($scannedPaths)));
 
     }
 
