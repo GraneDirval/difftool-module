@@ -19,15 +19,21 @@ class EntityDataProvider
      * @var EntityManagerInterface
      */
     private $entityManager;
+    /**
+     * @var EntitySerializationDataProvider
+     */
+    private $dataProvider;
 
 
     /**
      * EntityDataProvider constructor.
-     * @param EntityManagerInterface $entityManager
+     * @param EntityManagerInterface          $entityManager
+     * @param EntitySerializationDataProvider $dataProvider
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, EntitySerializationDataProvider $dataProvider)
     {
         $this->entityManager = $entityManager;
+        $this->dataProvider  = $dataProvider;
     }
 
     public function getEntityData(string $entityClass, array $ignoredFields = [])
@@ -81,7 +87,7 @@ class EntityDataProvider
     private function getPropertiesToSelect($entity): array
     {
         $metadata           = $this->entityManager->getClassMetadata($entity);
-        $diffToolEntityData = EntitySerializationDataProvider::$list[$entity] ?? null;
+        $diffToolEntityData = $this->dataProvider->getEntityMappings($entity) ?? null;
 
         $fieldsToSelect = $metadata->getFieldNames();
         if ($diffToolEntityData && isset($diffToolEntityData[1])) {

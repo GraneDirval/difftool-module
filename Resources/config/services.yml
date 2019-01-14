@@ -14,7 +14,7 @@ services:
 
   demo_data.entity_data_provider:
      class: Playwing\DiffToolBundle\DiffTool\EntityDataProvider
-     arguments: ['@doctrine.orm.entity_manager']
+     arguments: ['@doctrine.orm.entity_manager', '@demo_data.entity_serialization_data_provider']
 
   demo_data.entity_serializer:
      class: Playwing\DiffToolBundle\DiffTool\EntitySerializer

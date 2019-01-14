@@ -2,7 +2,7 @@
 
 <phpunit bootstrap="./vendor/autoload.php">
     <testsuites>
-        <testsuite name="MyBundle test suite">
+        <testsuite name="DiffTool test suite">
             <directory suffix="Test.php">./Tests</directory>
         </testsuite>
     </testsuites>
