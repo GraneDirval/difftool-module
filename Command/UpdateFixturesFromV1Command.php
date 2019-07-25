@@ -9,7 +9,7 @@ use Playwing\DiffToolBundle\DiffTool\EntityDataProvider;
 use Playwing\DiffToolBundle\DiffTool\EntitySerializationDataProvider;
 use Playwing\DiffToolBundle\DiffTool\EntitySerializer;
 use Playwing\DiffToolBundle\DiffTool\FixtureDataLocator;
-use Playwing\DiffToolBundle\Entity\Interfaces\HasUuid;
+use CommonDataBundle\Entity\Interfaces\HasUuid;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

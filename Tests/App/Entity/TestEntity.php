@@ -10,7 +10,7 @@ namespace Playwing\DiffToolBundle\Tests\App\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
-use Playwing\DiffToolBundle\Entity\Interfaces\HasUuid;
+use CommonDataBundle\Entity\Interfaces\HasUuid;
 
 
 /**

@@ -11,7 +11,7 @@ namespace Playwing\DiffToolBundle\DiffTool;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Playwing\DiffToolBundle\Entity\Interfaces\HasUuid;
+use CommonDataBundle\Entity\Interfaces\HasUuid;
 use Playwing\DiffToolBundle\Utils\FixtureDataLoader;
 
 class DataComparator
